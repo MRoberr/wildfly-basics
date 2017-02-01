@@ -1,4 +1,4 @@
-package rober.wildfly.basics.jpa;
+package rober.wildfly.basics.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -12,10 +12,10 @@ import javax.persistence.*;
 @Table(name="roles")
 @NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
 public class Role implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -793191113308148220L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	private String type;

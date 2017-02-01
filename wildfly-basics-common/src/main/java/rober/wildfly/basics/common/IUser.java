@@ -2,7 +2,7 @@ package rober.wildfly.basics.common;
 
 import java.util.List;
 
-import rober.wildfly.basics.jpa.User;
+import rober.wildfly.basics.jpa.model.User;
 
 public interface IUser {
 

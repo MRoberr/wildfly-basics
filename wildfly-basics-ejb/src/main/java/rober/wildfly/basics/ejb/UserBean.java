@@ -8,25 +8,28 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import rober.wildfly.basics.common.IUser;
-import rober.wildfly.basics.jpa.User;
+import rober.wildfly.basics.jpa.model.User;
 
 @Stateless
-public class UserBean implements IUser{
+public class UserBean implements IUser {
 
-	@PersistenceContext(unitName = "WildflyBasics")
+	@PersistenceContext(unitName = "WildFlyBasics")
 	private EntityManager entityManager;
-	
+
 	@Override
 	public int addUser(String name) {
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		int id = ((Number) entityManager.createNamedQuery("User.max").getSingleResult()).intValue();
-		System.out.println(id);
+
+		int id;
+		try {
+			id = ((Number)entityManager.createNamedQuery("User.max").getSingleResult()).intValue();
+		}catch(NullPointerException e) {
+			id = 0;
+		}
 		User newUser = new User();
-		newUser.setId(id);
+		newUser.setId(id + 1);
 		newUser.setName(name);
-		
+
 		entityManager.persist(newUser);
-		
 		return 0;
 	}
 

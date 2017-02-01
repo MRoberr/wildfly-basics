@@ -1,4 +1,4 @@
-package rober.wildfly.basics.jpa;
+package rober.wildfly.basics.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -13,13 +13,13 @@ import java.util.List;
 @Table(name="users")
 @NamedQueries({
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.max", query="select max(u.id) from User u")
+	@NamedQuery(name="User.max", query="SELECT max(u.id) FROM User u")
 })
 public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 2601911083004125008L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
 	private String name;

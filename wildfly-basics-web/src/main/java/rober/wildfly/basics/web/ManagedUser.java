@@ -9,7 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import rober.wildfly.basics.common.IUser;
-import rober.wildfly.basics.jpa.User;
+import rober.wildfly.basics.jpa.model.User;
 
 @Named("mUser")
 @ApplicationScoped
@@ -21,7 +21,7 @@ public class ManagedUser implements Serializable, IUser {
 	
 	@Override
 	public int addUser(String name) {
-
+		
 		getUserBean().addUser(name);
 		return 0;
 	}
