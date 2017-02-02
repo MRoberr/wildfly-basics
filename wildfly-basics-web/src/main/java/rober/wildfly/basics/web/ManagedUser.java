@@ -21,44 +21,43 @@ public class ManagedUser implements Serializable, IUser {
 	
 	@Override
 	public int addUser(String name) {
-		
 		getUserBean().addUser(name);
 		return 0;
 	}
 
 	@Override
-	public int removeUser(int id) {
-		// TODO Auto-generated method stub
+	public int removeUserById(int id) {
+		getUserBean().removeUserById(id);
 		return 0;
 	}
 
 	@Override
 	public int changeUserName(String oldName, String newName) {
-		// TODO Auto-generated method stub
+		getUserBean().changeUserName(oldName, newName);
 		return 0;
 	}
 
 	@Override
 	public User searchForUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("elotte" + id);
+		User user = getUserBean().searchForUserById(id);;
+		System.out.println("utana " + user.getName());
+		return user;
 	}
 
 	@Override
-	public List<User> searchForUserBy(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> searchForUserByName(String name) {
+		return getUserBean().searchForUserByName(name);
 	}
 
 	@Override
 	public List<User> listAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return getUserBean().listAllUsers();
 	}
 
 	@Override
 	public int setUserRole(String name, String role) {
-		// TODO Auto-generated method stub
+		getUserBean().setUserRole(name, role);
 		return 0;
 	}
 	

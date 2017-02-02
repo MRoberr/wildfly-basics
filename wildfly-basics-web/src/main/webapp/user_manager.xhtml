@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<h:outputStylesheet name="css/table-style.css" />
+	<title>Users</title>
+
+	
+
+</h:head>
+<h:body>
+
+	<div id="table-div">
+		<h:panelGroup id="dataTableGroup">
+		<h:dataTable id="dataTable" value="#{mUser.listAllUsers()}" var="user"
+			styleClass="order-table" headerClass="order-table-header"
+			rowClasses="order-table-odd-row,order-table-even-row"
+			columnClasses="id-column,name-column">
+
+			<h:column>
+				<f:facet name="header">id</f:facet> #{user.id}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">name</f:facet> #{user.name}
+		</h:column>
+		</h:dataTable>
+		</h:panelGroup>
+	</div>
+	<h1>Add user</h1>
+
+	<h:form>
+		<h:inputText id="addUser" binding="#{addName}" />
+		<h:commandButton value="Add" action="#{mUser.addUser(addName.value)}"/>
+	</h:form>
+
+	<br />
+	<br />
+
+	<h1>Remove user(id)</h1>
+
+	<h:form>
+		<h:inputText id="removeUser" binding="#{removeName}"
+			onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" />
+		<h:commandButton value="Remove"
+			action="#{mUser.removeUserById(removeName.value)}"/>
+	</h:form>
+
+	<br />
+	<br />
+
+	<h1>Change name of the user</h1>
+
+	<h:form>
+		Old name: <br/>
+		<h:inputText id="old" binding="#{oldName}" />
+		<br />
+		New name:<br/>
+		<h:inputText id="new" binding="#{newName}" />
+		<br />
+		<h:commandButton value="Change"
+			action="#{mUser.changeUserName(oldName.value, newName.value)}" />
+				
+	</h:form>
+	
+	<br/>
+	<br/>
+	
+	<h1>Search user(id)</h1>(nincs kesz)
+	
+	<h:form>
+		<h:inputText id="searchId" binding="#{userById}" 
+			onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+		<h:commandButton value="Search" 
+			action="#{mUser.searchForUserById(userById.value)}">
+			<f:ajax render=":table-grid:dataTableGroup:dataTable"/>
+		</h:commandButton>
+	</h:form>
+	
+	<br/>
+	<br/>
+	
+	<h1>Search user(name)</h1>(nincs kesz)
+	
+	<h:form>
+		<h:inputText id="searchName" binding="#{userByName}" />
+		<h:commandButton value="Search"
+			action="#{mUser.searchForUserByName(userName.value)}">
+			<f:ajax execute="@form" render=":table-grid:dataTableGroup:dataTable" />
+		</h:commandButton>		
+	</h:form>
+			
+
+</h:body>
+</html>

@@ -3,9 +3,13 @@ package rober.wildfly.basics.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.jws.soap.SOAPBinding.Use;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import rober.wildfly.basics.common.IUser;
 import rober.wildfly.basics.jpa.model.User;
@@ -13,7 +17,7 @@ import rober.wildfly.basics.jpa.model.User;
 @Stateless
 public class UserBean implements IUser {
 
-	@PersistenceContext(unitName = "WildFlyBasics")
+	@PersistenceContext(unitName = "WildflyBasics")
 	private EntityManager entityManager;
 
 	@Override
@@ -34,33 +38,54 @@ public class UserBean implements IUser {
 	}
 
 	@Override
-	public int removeUser(int id) {
-		// TODO Auto-generated method stub
+	public int removeUserById(int id) {
+
+		User user = entityManager.find(User.class, id);
+		entityManager.remove(user);
+		
 		return 0;
 	}
 
 	@Override
 	public int changeUserName(String oldName, String newName) {
-		// TODO Auto-generated method stub
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		Root<User> userRoot = criteriaQuery.from(User.class);
+		
+		criteriaQuery.select(userRoot).where(builder.equal(userRoot.get("name"), oldName));
+		User user = entityManager.createQuery(criteriaQuery).getSingleResult();
+		user.setName(newName);
 		return 0;
 	}
 
 	@Override
 	public User searchForUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = entityManager.find(User.class, id); 
+		return user;
 	}
 
 	@Override
-	public List<User> searchForUserBy(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> searchForUserByName(String name) {
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		Root<User> userRoot = criteriaQuery.from(User.class);
+		
+		criteriaQuery.select(userRoot).where(builder.like(userRoot.get("name"), "%" + name + "%"));
+		List<User> user = entityManager.createQuery(criteriaQuery).getResultList();
+		return user;
 	}
 
 	@Override
 	public List<User> listAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		Root<User> userRoot = criteriaQuery.from(User.class);
+		
+		criteriaQuery.select(userRoot);		
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override
