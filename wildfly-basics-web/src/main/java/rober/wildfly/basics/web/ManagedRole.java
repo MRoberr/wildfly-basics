@@ -1,24 +1,23 @@
-package rober.wildfly.basics.ejb;
+package rober.wildfly.basics.web;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import rober.wildfly.basics.common.IRole;
 import rober.wildfly.basics.jpa.model.Role;
-import rober.wildfly.basics.jpa.model.User;
 
-@Stateless
-public class RoleBean implements IRole{
+@Named("mRole")
+@ApplicationScoped
+public class ManagedRole implements Serializable, IRole {
 
-	
-	@PersistenceContext
-	private EntityManager entityManager;
+	private static final long serialVersionUID = 2149223857083936789L;
+
+	private IRole roleBean = null;
 	
 	@Override
 	public int createRole(String role) {
@@ -40,13 +39,7 @@ public class RoleBean implements IRole{
 
 	@Override
 	public List<Role> listExistingRoles() {
-
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Role> criteriaQuery = builder.createQuery(Role.class);
-		Root<Role> userRoot = criteriaQuery.from(Role.class);
-		
-		criteriaQuery.select(userRoot);		
-		return entityManager.createQuery(criteriaQuery).getResultList();
+		return getRoleBean().listExistingRoles();
 	}
 
 	@Override
@@ -61,4 +54,17 @@ public class RoleBean implements IRole{
 		return null;
 	}
 
+	private IRole getRoleBean() {
+
+		if (roleBean == null) {
+
+			try {
+				InitialContext jndi = new InitialContext();
+				roleBean = (IRole) jndi.lookup(IRole.jdniName);
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+		}
+		return roleBean;
+	}
 }

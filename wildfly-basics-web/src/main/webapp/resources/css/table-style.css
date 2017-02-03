@@ -29,10 +29,33 @@
 	width: 150px;
 }
 
+.role-column{
+	width: 200px;
+	
+}
+
 #table-div{
-	width: 200px; 
+	width: 500px; 
 	height:100vh; 
 	overflow-y: auto; 
 	clear: both; 
 	float: left;
+	margin-right: 50px;
+}
+
+#manager-div{
+	width: 400px;
+	height: 100vh;
+	overflow-y: auto;
+	clear: right;
+	float: left;
+	margin-right: 50px;
+}
+
+#result-div{
+	width: 500px;
+	height: 100vh;
+	overflow-y: auto;
+	float: left;
+	text-align: center;
 }

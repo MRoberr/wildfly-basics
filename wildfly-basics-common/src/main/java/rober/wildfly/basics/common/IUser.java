@@ -2,6 +2,7 @@ package rober.wildfly.basics.common;
 
 import java.util.List;
 
+import rober.wildfly.basics.jpa.model.Role;
 import rober.wildfly.basics.jpa.model.User;
 
 public interface IUser {
@@ -14,6 +15,6 @@ public interface IUser {
 	public User searchForUserById(int id);
 	public List<User> searchForUserByName(String name);
 	public List<User> listAllUsers();
-	public int setUserRole(String name, String role);
+	public int setUserRole(String name, List<Role> roles );
 	
 }

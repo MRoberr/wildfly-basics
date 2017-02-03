@@ -2,6 +2,9 @@ package rober.wildfly.basics.jpa.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.persistence.criteria.Fetch;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,7 +28,7 @@ public class User implements Serializable {
 	private String name;
 
 	//uni-directional many-to-many association to Role
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch=FetchType.EAGER )
 	@JoinTable(
 		name="users_roles"
 		, joinColumns={
@@ -38,6 +41,7 @@ public class User implements Serializable {
 	private List<Role> roles;
 
 	public User() {
+		roles = new ArrayList<>();
 	}
 
 	public int getId() {
@@ -61,7 +65,19 @@ public class User implements Serializable {
 	}
 
 	public void setRoles(List<Role> roles) {
+		System.out.println("itt");
 		this.roles = roles;
+	}
+	
+	public String getSRoles() {
+		
+		String stringRoles = ""; 
+		
+		for(Role r: roles) {
+			stringRoles += r.getType() + " ";
+		}
+		
+		return stringRoles;
 	}
 
 }

@@ -3,15 +3,15 @@ package rober.wildfly.basics.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.jws.soap.SOAPBinding.Use;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import rober.wildfly.basics.common.IUser;
+import rober.wildfly.basics.jpa.model.Role;
 import rober.wildfly.basics.jpa.model.User;
 
 @Stateless
@@ -67,14 +67,13 @@ public class UserBean implements IUser {
 
 	@Override
 	public List<User> searchForUserByName(String name) {
-
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> userRoot = criteriaQuery.from(User.class);
 		
 		criteriaQuery.select(userRoot).where(builder.like(userRoot.get("name"), "%" + name + "%"));
-		List<User> user = entityManager.createQuery(criteriaQuery).getResultList();
-		return user;
+		List<User> users = entityManager.createQuery(criteriaQuery).getResultList();
+		return users;
 	}
 
 	@Override
@@ -89,9 +88,31 @@ public class UserBean implements IUser {
 	}
 
 	@Override
-	public int setUserRole(String name, String role) {
-		// TODO Auto-generated method stub
+	public int setUserRole(String name, List<Role> roles) {
+
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User>criteriaQuery = builder.createQuery(User.class);
+		Root<User> userRoor = criteriaQuery.from(User.class);
+		
+		criteriaQuery.select(userRoor).where(builder.equal(userRoor.get("name"), name));
+		
+		User user = entityManager.createQuery(criteriaQuery).getSingleResult();
+		System.out.println("megvan a user");
+		user.setRoles(roles);
+		System.out.println("asd1");
+		System.out.println("roles nr " + roles.size());
+
+		for(Role r:user.getRoles()) {
+			System.out.println("in for");
+			System.out.println(r.getType());
+		}
+		
+		System.out.println("merge elott");
+		entityManager.merge(user);
+		System.out.println("merge megvan");
+		
 		return 0;
 	}
+
 
 }
