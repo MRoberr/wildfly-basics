@@ -7,136 +7,134 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<h:outputStylesheet name="css/table-style.css" />
+	<h:outputStylesheet name="css/style.css" />
 	<title>Users</title>
 
-	
+
 
 </h:head>
 <h:body>
 
 	<div id="table-div">
-		<h:panelGroup id="dataTableGroup">
-			<h:dataTable id="dataTable" value="#{mUser.listAllUsers()}" var="user"
-				styleClass="order-table" headerClass="order-table-header"
-				rowClasses="order-table-odd-row,order-table-even-row" 
-				columnClasses="id-column,name-column,role-column">
-				<h:column>
-					<f:facet name="header" >id</f:facet> #{user.id}
+		<h:dataTable id="dataTable" value="#{mUser.listAllUsers()}" var="user"
+			styleClass="order-table" headerClass="order-table-header"
+			rowClasses="order-table-odd-row,order-table-even-row"
+			columnClasses="id-column,name-column,role-column">
+			<h:column>
+				<f:facet name="header">id</f:facet> #{user.id}
 				</h:column>
-	
-				<h:column>
-					<f:facet name="header">name</f:facet> #{user.name}
+
+			<h:column>
+				<f:facet name="header">name</f:facet> #{user.name}
 				</h:column>
-				
-				<h:column >
-					<f:facet name="header">role</f:facet> #{user.getSRoles()}
+
+			<h:column>
+				<f:facet name="header">role</f:facet> #{user.getSRoles()}
 				</h:column>
-				
-			</h:dataTable>
-		</h:panelGroup>
+
+		</h:dataTable>
 	</div>
-	
+
 	<div id="manager-div">
 		<h1>Add user</h1>
-	
+
 		<h:form>
 			<h:inputText id="addUser" binding="#{addName}" />
-			<h:commandButton value="Add" action="#{mUser.addUser(addName.value)}"/>
+			<h:commandButton value="Add" action="#{mUser.addUser(addName.value)}" />
 		</h:form>
-	
-		<br />
-		<br />
-	
+
+		<br /> <br />
+
 		<h1>Remove user(id)</h1>
-	
+
 		<h:form>
 			<h:inputText id="removeUser" binding="#{removeName}"
 				onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" />
 			<h:commandButton value="Remove"
-				action="#{mUser.removeUserById(removeName.value)}"/>
+				action="#{mUser.removeUserById(removeName.value)}" />
 		</h:form>
-	
-		<br />
-		<br />
-	
+
+		<br /> <br />
+
 		<h1>Change name of the user</h1>
-	
+
 		<h:form>
-			Old name: <br/>
+			Old name: <br />
 			<h:inputText id="old" binding="#{oldName}" />
 			<br />
-			New name:<br/>
+			New name:<br />
 			<h:inputText id="new" binding="#{newName}" />
 			<br />
 			<h:commandButton value="Change"
 				action="#{mUser.changeUserName(oldName.value, newName.value)}" />
-					
+
 		</h:form>
-		
-		<br/>
-		<br/>
-		
+
+		<br /> <br />
+
 		<h1>Search user(id)</h1>
-		
+
 		<h:form>
-			<h:inputText id="searchId" binding="#{userById}" 
-				onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
-			<h:commandButton value="Search" 
+			<h:inputText id="searchId" binding="#{userById}"
+				onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" />
+			<h:commandButton value="Search"
 				action="#{mUser.searchForUserById(userById.value)}" />
 		</h:form>
-		
-		<br/>
-		<br/>
-		
+
+		<br /> <br />
+
 		<h1>Search user(name)</h1>
-		
+
 		<h:form>
 			<h:inputText id="searchName" binding="#{userByName}" />
 			<h:commandButton value="Search"
 				action="#{mUser.searchForUserByName(userByName.value)}" />
 		</h:form>
-		
+
 		<h1>Set user role</h1>
-		
+
 		<h:form style="margin-bottom: 50px;">
-			<h:inputText id="setRole" binding="#{setRoleForName}"  />
-			
-			<h:selectManyCheckbox id="roles" binding="#{selectedRoles}" value="#{mUser.selected}" > 
-				<f:selectItems value="#{mRole.listExistingRoles()}" var="role" itemLabel="#{role.type}" itemValue="#{role.type}" /><!-- binding="#{selectedRoles}"--> 
+			<h:inputText id="setRole" binding="#{setRoleForName}" />
+
+			<h:selectManyCheckbox id="roles" binding="#{selectedRoles}"
+				value="#{mUser.selected}">
+				<f:selectItems value="#{mRole.listExistingRoles()}" var="role"
+					itemLabel="#{role.type}" />
+				<!-- binding="#{selectedRoles}"-->
 			</h:selectManyCheckbox>
 			<h:commandButton value="Set"
-				action="#{mUser.setUserRole(setRoleForName.value,selectedRoles.value)}"/>
+				action="#{mUser.setUserRole(setRoleForName.value,selectedRoles.value)}" />
 		</h:form>
-		
-	
+
+
 	</div>
-	
+
 	<div id="result-div">
-		<h:dataTable id="resultsTable" value="#{mUser.searchList}" var="user" 
+		<h:dataTable id="resultsTable" value="#{mUser.searchList}" var="user"
 			styleClass="order-table" headerClass="order-table-header"
-				rowClasses="order-table-odd-row,order-table-even-row" 
-				columnClasses="id-column,name-column,role-column">
-			
+			rowClasses="order-table-odd-row,order-table-even-row"
+			columnClasses="id-column,name-column,role-column">
+
 			<f:facet name="header">
 				<h:outputText value="Search results" />
 			</f:facet>
-			
+
 			<h:column>
 				<f:facet name="header">id</f:facet> #{user.id}
 			</h:column>
-	
+
 			<h:column>
 				<f:facet name="header">name</f:facet> #{user.name}
 			</h:column>
-			
+
 			<h:column>
 				<f:facet name="header">role</f:facet> #{user.getSRoles()}
 			</h:column>
-			
+
 		</h:dataTable>
-		<h:outputText value="Empty search result" rendered="#{empty mUser.searchList}"/>	
-		
+		<h:outputText value="Empty search result"
+			rendered="#{empty mUser.searchList}" />
+
 	</div>
 
 </h:body>

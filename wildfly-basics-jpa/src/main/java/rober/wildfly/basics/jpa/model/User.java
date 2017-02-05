@@ -1,11 +1,20 @@
 package rober.wildfly.basics.jpa.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.persistence.criteria.Fetch;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -25,6 +34,7 @@ public class User implements Serializable {
 	@Id
 	private int id;
 
+	@Column(name = "name")
 	private String name;
 
 	//uni-directional many-to-many association to Role
@@ -80,4 +90,8 @@ public class User implements Serializable {
 		return stringRoles;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id = " + Integer.toString(id) + "; name = " + name + " " + roles.toString() + " ]";
+	}
 }

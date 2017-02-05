@@ -21,19 +21,19 @@ public class ManagedRole implements Serializable, IRole {
 	
 	@Override
 	public int createRole(String role) {
-		// TODO Auto-generated method stub
+		getRoleBean().createRole(role);
 		return 0;
 	}
 
 	@Override
 	public int forgetRole(String role) {
-		// TODO Auto-generated method stub
+		getRoleBean().forgetRole(role);
 		return 0;
 	}
 
 	@Override
 	public int changeRoleName(String oldRole, String newRole) {
-		// TODO Auto-generated method stub
+		getRoleBean().changeRoleName(oldRole, newRole);
 		return 0;
 	}
 
@@ -44,14 +44,12 @@ public class ManagedRole implements Serializable, IRole {
 
 	@Override
 	public List<Role> searchRoleByName(String role) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRoleBean().searchRoleByName(role);
 	}
 
 	@Override
 	public Role searchRoleById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getRoleBean().searchRoleById(id);
 	}
 
 	private IRole getRoleBean() {

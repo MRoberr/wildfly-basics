@@ -20,8 +20,8 @@ public class ManagedUser implements Serializable, IUser {
 	private static final long serialVersionUID = -4331042725514143791L;
 
 	private IUser userBean = null;
-
 	private List<User> searchList = null; 
+	private List<Role> selected = null;
 	
 	@Override
 	public int addUser(String name) {
@@ -75,7 +75,8 @@ public class ManagedUser implements Serializable, IUser {
 	@Override
 	public int setUserRole(String name, List<Role> roles) {
 		clearSearch();
-		
+		System.out.println("managed beanbe");
+		System.out.println(roles);
 		getUserBean().setUserRole(name, roles);
 		return 0;
 	}
@@ -114,7 +115,6 @@ public class ManagedUser implements Serializable, IUser {
 		searchList = null;
 	}
 	
-	private List<Role> selected = null;
 
 	public List<Role> getSelected() {
 		return selected;

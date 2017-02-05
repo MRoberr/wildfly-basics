@@ -97,18 +97,19 @@ public class UserBean implements IUser {
 		criteriaQuery.select(userRoor).where(builder.equal(userRoor.get("name"), name));
 		
 		User user = entityManager.createQuery(criteriaQuery).getSingleResult();
-		System.out.println("megvan a user");
+		System.out.println("param roles in next line");
+		System.out.println(user.toString());
 		user.setRoles(roles);
-		System.out.println("asd1");
-		System.out.println("roles nr " + roles.size());
+		System.out.println(user.toString());
+		System.out.println("asd2");
 
-		for(Role r:user.getRoles()) {
-			System.out.println("in for");
-			System.out.println(r.getType());
-		}
+//		for(Role r:user.getRoles()) {
+//			System.out.println("in for");
+//			System.out.println(r.getType());
+//		}
 		
 		System.out.println("merge elott");
-		entityManager.merge(user);
+//		entityManager.merge(user);
 		System.out.println("merge megvan");
 		
 		return 0;

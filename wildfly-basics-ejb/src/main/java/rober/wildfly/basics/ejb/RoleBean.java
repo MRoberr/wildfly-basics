@@ -22,7 +22,18 @@ public class RoleBean implements IRole{
 	
 	@Override
 	public int createRole(String role) {
-		// TODO Auto-generated method stub
+		
+		int id;
+		try {
+			id = ((Number)entityManager.createNamedQuery("Role.max").getSingleResult()).intValue();
+		}catch(NullPointerException e) {
+			id = 0;
+		}
+		Role newRole = new Role();
+		newRole.setId(id + 1);
+		newRole.setType(role);
+
+		entityManager.persist(newRole);
 		return 0;
 	}
 
