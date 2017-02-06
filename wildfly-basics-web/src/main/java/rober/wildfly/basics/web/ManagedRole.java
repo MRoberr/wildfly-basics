@@ -53,7 +53,7 @@ public class ManagedRole implements Serializable, IRole {
 
 	@Override
 	public Role searchRoleById(int id) {
-
+		
 		Role role = getRoleBean().searchRoleById(id);;
 		if(searchResult == null) {
 			
