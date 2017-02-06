@@ -30,6 +30,8 @@
 				</h:column>
 
 		</h:dataTable>
+		
+		
 	</div>
 	
 	<div id="manager-div">
@@ -42,6 +44,78 @@
 		
 		<br/>
 		<br/>
+		
+		<h1>Forget role</h1>
+		
+		<h:form>
+			<h:inputText id="forgetRole" binding="#{removeRole}" />
+			<h:commandButton value="Forget" action="#{mRole.forgetRole(removeRole.value)}" />
+		</h:form>
+		
+		<br/>
+		<br/>
+		
+		<h1>Rename role</h1>
+		
+		<h:form>
+			Old role name <br/>
+			<h:inputText id="oldRole" binding="#{oldRole}" />
+			<br/>
+			New role name <br/>
+			<h:inputText id="newRole" binding="#{newRole}" />
+			<br/>
+			<h:commandButton value="Change" action="#{mRole.changeRoleName(oldRole.value, newRole.value)}" />
+		</h:form>
+		
+		<br/>
+		<br/>
+		
+		<h1>Search role(id)</h1>
+		
+		<h:form>
+			<h:inputText id="roleId" binding="#{roleId}" 
+				onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" />
+			<h:commandButton value="Search" action="#{mRole.searchRoleById(roleId.value)}" />
+		</h:form>
+		
+		<br/>
+		<br/>
+		
+		<h1>Search role(name)</h1>
+		
+		<h:form>
+			<h:inputText id="roleName" binding="#{roleName}" />
+			<h:commandButton value="Search" action="#{mRole.searchRoleByName(roleName.value)}" />
+		</h:form>
+		
+	</div>
+	
+	<div id="result-div">
+		<h:dataTable id="resultsTable" value="#{mRole.searchResult}" var="role"
+			styleClass="order-table" headerClass="order-table-header"
+			rowClasses="order-table-odd-row,order-table-even-row"
+			columnClasses="id-column,name-column">
+
+			<f:facet name="header">
+				<h:outputText value="Search results" />
+			</f:facet>
+
+			<h:column>
+				<f:facet name="header">id</f:facet> #{role.id}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">type</f:facet> #{role.type}
+			</h:column>
+
+
+		</h:dataTable>
+		<h:outputText value="Empty search result"
+			rendered="#{empty mRole.searchResult}" />
+
+		<h:form style="float: left;">
+			<h:commandButton action="user_manager" value="Change Page" />
+		</h:form>
 	</div>
 
 </h:body>

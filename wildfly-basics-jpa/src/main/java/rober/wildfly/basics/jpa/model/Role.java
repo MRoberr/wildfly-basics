@@ -29,7 +29,7 @@ public class Role implements Serializable {
 	@Id
 	private int id;
 
-	@Column(name = "type")
+	@Column(name = "role_type")
 	private String type;
 
 	public Role() {

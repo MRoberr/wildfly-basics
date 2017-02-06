@@ -5,12 +5,9 @@
 	<persistence-unit name="WildflyBasics"
 		transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/WildflyBasicsDs</jta-data-source>
-		<class>rober.wildfly.basics.jpa.model.Role</class>
+		
 		<class>rober.wildfly.basics.jpa.model.User</class>
-		
-		<properties>
-            <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.2"/>
-        </properties>
-		
+		<class>rober.wildfly.basics.jpa.model.Role</class>
+
 	</persistence-unit>
 </persistence>

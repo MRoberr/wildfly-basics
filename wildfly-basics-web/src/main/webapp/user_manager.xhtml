@@ -12,6 +12,7 @@
 
 
 
+
 </h:head>
 <h:body>
 
@@ -36,16 +37,26 @@
 	</div>
 
 	<div id="manager-div">
-		<h1>Add user</h1>
+		<h1>Sign up user</h1>
+
+		<script type="text/javascript">
+	
+		function clear()
+		{
+			alert("megjelent");
+		}
+	
+	</script>
 
 		<h:form>
 			<h:inputText id="addUser" binding="#{addName}" />
-			<h:commandButton value="Add" action="#{mUser.addUser(addName.value)}" />
+			<h:commandButton value="Add" action="#{mUser.addUser(addName.value)}"
+				onclick="clear();" />
 		</h:form>
 
 		<br /> <br />
 
-		<h1>Remove user(id)</h1>
+		<h1>Kick user(id)</h1>
 
 		<h:form>
 			<h:inputText id="removeUser" binding="#{removeName}"
@@ -56,7 +67,7 @@
 
 		<br /> <br />
 
-		<h1>Change name of the user</h1>
+		<h1>Rename user</h1>
 
 		<h:form>
 			Old name: <br />
@@ -96,14 +107,12 @@
 		<h:form style="margin-bottom: 50px;">
 			<h:inputText id="setRole" binding="#{setRoleForName}" />
 
-			<h:selectManyCheckbox id="roles" binding="#{selectedRoles}"
-				value="#{mUser.selected}">
+			<h:selectManyCheckbox id="roles" binding="#{selectedRoles}">
 				<f:selectItems value="#{mRole.listExistingRoles()}" var="role"
-					itemLabel="#{role.type}" />
-				<!-- binding="#{selectedRoles}"-->
+					itemLabel="#{role.type}" itemValue="#{role.id},#{role.type}" />
 			</h:selectManyCheckbox>
 			<h:commandButton value="Set"
-				action="#{mUser.setUserRole(setRoleForName.value,selectedRoles.value)}" />
+				action="#{mUser.setRole(setRoleForName.value,selectedRoles.value)}" />
 		</h:form>
 
 
@@ -135,6 +144,9 @@
 		<h:outputText value="Empty search result"
 			rendered="#{empty mUser.searchList}" />
 
+		<h:form style="float: left;">
+			<h:commandButton action="role_manager" value="Change Page" />
+		</h:form>
 	</div>
 
 </h:body>

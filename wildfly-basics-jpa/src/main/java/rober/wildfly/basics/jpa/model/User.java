@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 /**
@@ -29,6 +30,7 @@ import javax.persistence.Table;
 })
 public class User implements Serializable {
 
+	@Transient
 	private static final long serialVersionUID = 2601911083004125008L;
 
 	@Id
@@ -38,7 +40,7 @@ public class User implements Serializable {
 	private String name;
 
 	//uni-directional many-to-many association to Role
-	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch=FetchType.EAGER )
+	@ManyToMany(fetch=FetchType.EAGER )
 	@JoinTable(
 		name="users_roles"
 		, joinColumns={
@@ -51,7 +53,7 @@ public class User implements Serializable {
 	private List<Role> roles;
 
 	public User() {
-		roles = new ArrayList<>();
+		roles = new ArrayList<Role>();
 	}
 
 	public int getId() {
@@ -73,9 +75,8 @@ public class User implements Serializable {
 	public List<Role> getRoles() {
 		return this.roles;
 	}
-
+	
 	public void setRoles(List<Role> roles) {
-		System.out.println("itt");
 		this.roles = roles;
 	}
 	

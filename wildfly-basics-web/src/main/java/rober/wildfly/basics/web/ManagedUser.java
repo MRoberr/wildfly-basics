@@ -21,7 +21,6 @@ public class ManagedUser implements Serializable, IUser {
 
 	private IUser userBean = null;
 	private List<User> searchList = null; 
-	private List<Role> selected = null;
 	
 	@Override
 	public int addUser(String name) {
@@ -75,10 +74,25 @@ public class ManagedUser implements Serializable, IUser {
 	@Override
 	public int setUserRole(String name, List<Role> roles) {
 		clearSearch();
-		System.out.println("managed beanbe");
-		System.out.println(roles);
 		getUserBean().setUserRole(name, roles);
 		return 0;
+	}
+	
+	public String setRole(String name, String[] roles) {
+		
+		List<Role> rolesList = new ArrayList<>();
+		
+		for(String r : roles) {
+			String[] cut = r.split(",");
+			Role newRole = new Role();
+			newRole.setId(new Integer(cut[0]));
+			newRole.setType(cut[1]);
+			
+			rolesList.add(newRole);
+		}
+		
+		setUserRole(name, rolesList);
+		return null;
 	}
 	
 	private IUser getUserBean() {
@@ -114,14 +128,5 @@ public class ManagedUser implements Serializable, IUser {
 		
 		searchList = null;
 	}
-	
-
-	public List<Role> getSelected() {
-		return selected;
-	}
-
-	public void setSelected(List<Role> roles) {
-		this.selected = roles;
-	} 
 	
 }

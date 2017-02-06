@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,6 +12,7 @@ import javax.persistence.criteria.Root;
 import rober.wildfly.basics.common.IUser;
 import rober.wildfly.basics.jpa.model.Role;
 import rober.wildfly.basics.jpa.model.User;
+import rober.wildfly.basics.jpa.model.User_;
 
 @Stateless
 public class UserBean implements IUser {
@@ -53,7 +53,7 @@ public class UserBean implements IUser {
 		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> userRoot = criteriaQuery.from(User.class);
 		
-		criteriaQuery.select(userRoot).where(builder.equal(userRoot.get("name"), oldName));
+		criteriaQuery.select(userRoot).where(builder.equal(userRoot.get(User_.name), oldName));
 		User user = entityManager.createQuery(criteriaQuery).getSingleResult();
 		user.setName(newName);
 		return 0;
@@ -71,7 +71,7 @@ public class UserBean implements IUser {
 		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> userRoot = criteriaQuery.from(User.class);
 		
-		criteriaQuery.select(userRoot).where(builder.like(userRoot.get("name"), "%" + name + "%"));
+		criteriaQuery.select(userRoot).where(builder.like(userRoot.get(User_.name), "%" + name + "%"));
 		List<User> users = entityManager.createQuery(criteriaQuery).getResultList();
 		return users;
 	}
@@ -92,25 +92,12 @@ public class UserBean implements IUser {
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<User>criteriaQuery = builder.createQuery(User.class);
-		Root<User> userRoor = criteriaQuery.from(User.class);
+		Root<User> userRoot = criteriaQuery.from(User.class);
 		
-		criteriaQuery.select(userRoor).where(builder.equal(userRoor.get("name"), name));
+		criteriaQuery.select(userRoot).where(builder.equal(userRoot.get(User_.name), name));
 		
 		User user = entityManager.createQuery(criteriaQuery).getSingleResult();
-		System.out.println("param roles in next line");
-		System.out.println(user.toString());
 		user.setRoles(roles);
-		System.out.println(user.toString());
-		System.out.println("asd2");
-
-//		for(Role r:user.getRoles()) {
-//			System.out.println("in for");
-//			System.out.println(r.getType());
-//		}
-		
-		System.out.println("merge elott");
-//		entityManager.merge(user);
-		System.out.println("merge megvan");
 		
 		return 0;
 	}
