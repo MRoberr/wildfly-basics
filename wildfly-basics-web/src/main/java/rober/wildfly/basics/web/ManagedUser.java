@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,7 +26,14 @@ public class ManagedUser implements Serializable, IUser {
 	
 	@Override
 	public int addUser(String name) {
-		getUserBean().addUser(name);
+		try {
+			getUserBean().addUser(name);
+		} catch(Exception e) {
+			String message = "Failed to retrieve data from webservice: " + e.getMessage();
+		    FacesContext.getCurrentInstance().addMessage(null, 
+		        new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
+		    e.printStackTrace(); // Or use a logger.
+		}
 		clearSearch();
 		return 0;
 	}

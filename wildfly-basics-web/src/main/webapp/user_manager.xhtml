@@ -52,6 +52,7 @@
 			<h:inputText id="addUser" binding="#{addName}" />
 			<h:commandButton value="Add" action="#{mUser.addUser(addName.value)}"
 				onclick="clear();" />
+			<h:message globalOnly="true" />
 		</h:form>
 
 		<br /> <br />
