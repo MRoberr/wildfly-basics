@@ -40,7 +40,7 @@ public class User implements Serializable {
 	private String name;
 
 	//uni-directional many-to-many association to Role
-	@ManyToMany(fetch=FetchType.EAGER )
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="users_roles"
 		, joinColumns={

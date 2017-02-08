@@ -11,7 +11,6 @@ import javax.naming.NamingException;
 
 import rober.wildfly.basics.common.IRole;
 import rober.wildfly.basics.jpa.model.Role;
-import rober.wildfly.basics.jpa.model.User;
 
 @Named("mRole")
 @ApplicationScoped

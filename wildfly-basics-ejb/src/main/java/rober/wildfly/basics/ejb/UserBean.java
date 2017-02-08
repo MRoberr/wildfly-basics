@@ -1,5 +1,6 @@
 package rober.wildfly.basics.ejb;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ejb.Stateless;

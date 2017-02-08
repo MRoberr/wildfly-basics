@@ -46,7 +46,7 @@ public class RoleBean implements IRole{
 		
 		criteriaQuery.select(roleRoot).where(builder.equal(roleRoot.get(Role_.type), role));
 		Role removeRole = entityManager.createQuery(criteriaQuery).getSingleResult();
-		entityManager.remove(removeRole);
+		entityManager.remove(entityManager.find(Role.class, removeRole.getId()));
 		
 		return 0;
 	}
